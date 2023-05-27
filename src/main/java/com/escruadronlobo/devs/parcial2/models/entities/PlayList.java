@@ -12,10 +12,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "playlist")
@@ -32,7 +34,13 @@ public class PlayList{
     @Column(name = "description")
 	private String description;
 
-    @OneToMany(fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_code", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "usercode", nullable = true)
 	private User user;
+
+    public PlayList(String title, String description, User user) {
+        this.title = title;
+        this.description = description;
+        this.user = user;
+    }
 }

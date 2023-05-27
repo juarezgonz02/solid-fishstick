@@ -14,13 +14,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
-@ToString(exclude = {"songs"})
 @Entity
 @Table(name = "Song")
 public class Song{
@@ -32,12 +33,18 @@ public class Song{
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "song", fetch = FetchType.LAZY)
-	@JsonIgnore
-	private List<Song> songs;
+    @OneToMany(mappedBy = "SongXPlaylist", fetch = FetchType.LAZY)
+    @JsonIgnore
+    @ToString.Exclude
+	private List<SongXPlaylist> playlists;
 
     @Column(name = "duration")
     private Integer duration;
+
+    public Song(String title, Integer duration) {
+        this.title = title;
+        this.duration = duration;
+    }
 }
 
 // crear playlist

@@ -1,21 +1,18 @@
 package com.escruadronlobo.devs.parcial2.models.entities;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
+import net.minidev.json.annotate.JsonIgnore;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "user")
@@ -35,5 +32,16 @@ public class User {
     @Column(name = "password")
 	private String password;
 
+    @OneToMany(mappedBy = "Playlist", fetch = FetchType.LAZY)
+    @ToString.Exclude
+    @JsonIgnore
+    private List<PlayList> playLists;
+
+
+    public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
 }
 

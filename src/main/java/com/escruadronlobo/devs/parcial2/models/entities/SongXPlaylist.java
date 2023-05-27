@@ -14,10 +14,12 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "SongXPlaylist")
@@ -27,13 +29,20 @@ public class SongXPlaylist{
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID code;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "playlist_code", nullable = true)
 	private PlayList play_listcode;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "song_code", nullable = true)
 	private Song song_code;
-    
-    
+
+	@Column(name = "date_added")
+	private Date date_added;
+
+	public SongXPlaylist(PlayList play_listcode, Song song_code, Date date_added) {
+		this.play_listcode = play_listcode;
+		this.song_code = song_code;
+		this.date_added = date_added;
+	}
 }
