@@ -1,6 +1,5 @@
 package com.escruadronlobo.devs.parcial2.models.entities;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 

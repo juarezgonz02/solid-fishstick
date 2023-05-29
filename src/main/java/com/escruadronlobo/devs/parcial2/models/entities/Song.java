@@ -47,8 +47,3 @@ public class Song{
     }
 }
 
-// crear playlist
-// recibir un arreglo para agregarlo a la playlist
-// añadir cancion a una playlist
-// eliminar una playlist
-// 
