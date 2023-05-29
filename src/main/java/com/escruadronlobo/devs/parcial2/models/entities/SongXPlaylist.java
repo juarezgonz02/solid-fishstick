@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "SongXPlaylist")
+@Table(name = "songXPlaylist")
 public class SongXPlaylist{
     @Id
     @Column(name = "code")

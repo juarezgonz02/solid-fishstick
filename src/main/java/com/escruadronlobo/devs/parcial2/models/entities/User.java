@@ -31,7 +31,7 @@ public class User {
     @Column(name = "password")
 	private String password;
 
-    @OneToMany(mappedBy = "Playlist", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "usercode", fetch = FetchType.LAZY)
     @ToString.Exclude
     @JsonIgnore
     private List<PlayList> playLists;

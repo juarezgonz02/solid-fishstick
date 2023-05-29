@@ -36,7 +36,7 @@ CREATE TABLE public.playlist (
 	description varchar NOT NULL,
 	usercode uuid NULL,
 	CONSTRAINT playlist_pk PRIMARY KEY (code),
-	CONSTRAINT playlist_fk FOREIGN KEY (code) REFERENCES public."user"(code) ON DELETE SET NULL ON UPDATE CASCADE
+	CONSTRAINT playlist_fk FOREIGN KEY (usercode) REFERENCES public."user"(code) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 
