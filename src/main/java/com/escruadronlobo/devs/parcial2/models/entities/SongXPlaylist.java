@@ -31,7 +31,7 @@ public class SongXPlaylist{
 
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "playlist_code", nullable = true)
-	private PlayList play_listcode;
+	private PlayList playListCode;
 
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "song_code", nullable = true)
@@ -40,8 +40,8 @@ public class SongXPlaylist{
 	@Column(name = "date_added")
 	private Date date_added;
 
-	public SongXPlaylist(PlayList play_listcode, Song song_code, Date date_added) {
-		this.play_listcode = play_listcode;
+	public SongXPlaylist(PlayList playListCode, Song song_code, Date date_added) {
+		this.playListCode = playListCode;
 		this.song_code = song_code;
 		this.date_added = date_added;
 	}
