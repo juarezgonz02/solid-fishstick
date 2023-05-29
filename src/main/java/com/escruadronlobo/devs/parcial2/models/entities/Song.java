@@ -23,7 +23,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Song")
+@Table(name = "song")
 public class Song{
     @Id
     @Column(name = "code")
@@ -33,7 +33,7 @@ public class Song{
     @Column(name = "title")
     private String title;
 
-    @OneToMany(mappedBy = "SongXPlaylist", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "song_code", fetch = FetchType.LAZY)
     @JsonIgnore
     @ToString.Exclude
 	private List<SongXPlaylist> playlists;
