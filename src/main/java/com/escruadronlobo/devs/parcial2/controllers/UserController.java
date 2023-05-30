@@ -39,16 +39,6 @@ public class UserController {
 				);
 	}
 	
-	@PostMapping("/save")
-	public ResponseEntity<?> saveUser(@RequestBody @Valid UserDTO user){
-		try { 
-	        userService.save(user);
-	        return new ResponseEntity<>(new MessageDTO("User Created"), HttpStatus.CREATED);
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	        return new ResponseEntity<>(new MessageDTO("Internal Server Error"), HttpStatus.INTERNAL_SERVER_ERROR);
-	    }
-	}
 	
 	@GetMapping("/{code}")
 	public ResponseEntity<?> findUserByCode(@PathVariable("code") String code){

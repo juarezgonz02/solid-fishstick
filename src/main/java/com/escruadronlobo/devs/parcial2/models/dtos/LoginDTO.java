@@ -9,6 +9,10 @@ import lombok.NonNull;
 
 @Data
 public class LoginDTO {
+	
+	public LoginDTO() {
+        // Constructor predeterminado sin argumentos
+    }
 
     @NonNull
     private String credential;
