@@ -19,7 +19,7 @@ public class PlayListController {
 	@Autowired 
 	private PlayListService playListService;
 	
-	@GetMapping("/")
+	@GetMapping("/all")
 	public ResponseEntity<?> findAllPlayLists(){
 		List<PlayList> playLists = playListService.findAll();
 		return new ResponseEntity<>(

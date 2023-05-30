@@ -22,8 +22,8 @@ public class PlayListServiceImpl implements PlayListService{
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void save(PlayListDTO info, User usercode) throws Exception {
-		PlayList newPlayList = new PlayList(info.getTitle(), info.getDescription(), usercode);
+	public void save(PlayListDTO info, User user) throws Exception {
+		PlayList newPlayList = new PlayList(info.getTitle(), info.getDescription(), user);
 			playListRepository.save(newPlayList);
 		
 	}
