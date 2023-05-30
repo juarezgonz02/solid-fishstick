@@ -1,91 +1,72 @@
 package com.escruadronlobo.devs.parcial2.controllers;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-
+import com.escruadronlobo.devs.parcial2.models.dtos.CreateSongDTO;
+import com.escruadronlobo.devs.parcial2.models.dtos.SongDTO;
+import com.escruadronlobo.devs.parcial2.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.escruadronlobo.devs.parcial2.models.entities.PlayList;
-import com.escruadronlobo.devs.parcial2.models.entities.Song;
-import com.escruadronlobo.devs.parcial2.repositories.SongRepository;
-import com.escruadronlobo.devs.parcial2.repositories.UserRepository;
-import com.escruadronlobo.devs.parcial2.service.SongXPlaylistServiceInterface;
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/songs")
 public class SongsController {
-	
-	 	@Autowired
-	    SongXPlaylistServiceInterface songXPlayListService ;
-
-	    @Autowired
-	    UserRepository userRepository;
-
-	    @Autowired
-	    SongRepository songRepository;
-
-	    @GetMapping("/songs")
-	    public ResponseEntity<?> getAllSongs(@RequestParam UUID playlist_id) throws Exception {
-
-	        List<Song> songs = songXPlayListService.findAllSongsInPlaylist(playlist_id);
-	        //System.out.println(songs);
-
-	        return new ResponseEntity<>(songs, HttpStatus.OK);
-	    }
-
-	    @PostMapping ("/songs/add")
-	    public ResponseEntity<?> addSongToPlaylist(@RequestParam UUID song_id, @RequestParam UUID playlist_id) {
-
-	        songXPlayListService.addSongToPlaylist(song_id, playlist_id);
-	        return new ResponseEntity<>(HttpStatus.CREATED);
-	    }
-	    @PostMapping("/songs/remove")
-	    	public ResponseEntity<?> removeSongFromPlaylist(@RequestParam UUID song_id, @RequestParam UUID playlist_id){
+	@Autowired
+	SongService service;
 
 
-	        songXPlayListService.deleteSongFromPlaylist(song_id, playlist_id);
-	        return new ResponseEntity<>(HttpStatus.OK);
-	    }
+	@GetMapping("/")
+	public ResponseEntity<List<SongDTO>> getAllSongs(@RequestParam(value = "search", required = false) String search){
+		try{
+			return ResponseEntity.ok(service.getAllSongs(search));
+		}
+		catch (Exception exception){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	    @GetMapping("/songs/count")
-	    public ResponseEntity<?> countSongsInPlaylist(@RequestParam UUID playlist_id) {
+	@GetMapping("/{code}")
+	public ResponseEntity<?> getSong(@PathVariable("code") UUID code){
+		try {
+			return ResponseEntity.ok(service.getSong(code));
+		}
+		catch ( Exception exception ){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	        Map<String, Integer> messages = new HashMap<>();
+	@PostMapping("/")
+	public ResponseEntity<?> addSong(@RequestBody CreateSongDTO dto){
+		try{
+			return ResponseEntity.ok(service.createSong(dto));
+		}
+		catch (Exception exception){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	        int songCount = songXPlayListService.countSongOnPlaylist(playlist_id);
+	@PutMapping("/{code}")
+	public ResponseEntity<?> editSong(@PathVariable("code") UUID code, @RequestBody CreateSongDTO dto){
+		try{
+			return ResponseEntity.ok(service.updateSong(code, dto));
+		}
+		catch (Exception exception){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	        messages.put("Songs in Playlist", songCount);
+	@DeleteMapping("/{code}")
+	public ResponseEntity<?> deleteSong(@PathVariable("code") UUID code){
+		try {
+			return ResponseEntity.ok(service.deleteSong(code));
+		}
+		catch (Exception exception){
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	        return new ResponseEntity<>(messages, HttpStatus.OK);
-	    }
 
-	    @GetMapping("/songs/filterByPlaylistDuration")
-	    public ResponseEntity<?> filterByPlaylistDuration(@RequestParam UUID playlist_id, @RequestParam int duration) {
-
-	        List<PlayList> filteredSongs = songXPlayListService.filterPlaylistByDuration(playlist_id, duration);
-	        return new ResponseEntity<>(filteredSongs, HttpStatus.OK);
-	    }
-	    @GetMapping("/songs/orderByAsc")
-	    public ResponseEntity<?> orderSongsByAsc(@RequestParam UUID playlist_id) {
-
-	        List<Song> orderedSongs = songXPlayListService.getSongsOrderedAsc(playlist_id);
-	        return new ResponseEntity<>(orderedSongs, HttpStatus.OK);
-	    }
-
-	    @GetMapping("/songs/orderByDesc")
-	    public ResponseEntity<?> orderSongsByDesc(@RequestParam UUID playlist_id) {
-
-	        List<Song> orderedSongs = songXPlayListService.getSongsOrderedDesc(playlist_id);
-
-	        return new ResponseEntity<>(orderedSongs, HttpStatus.OK);
-	    }
 }
