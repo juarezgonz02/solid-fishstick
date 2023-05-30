@@ -3,19 +3,17 @@ package com.escruadronlobo.devs.parcial2.models.entities;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import net.minidev.json.annotate.JsonIgnore;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
-
+@Table(name = "user_table")
 public class User {
     @Id
     @Column(name = "code")
@@ -35,7 +33,6 @@ public class User {
     @ToString.Exclude
     @JsonIgnore
     private List<PlayList> playLists;
-
 
     public User(String username, String email, String password) {
         this.username = username;

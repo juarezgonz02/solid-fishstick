@@ -12,7 +12,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,18 +30,18 @@ public class SongXPlaylist{
 
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "playlist_code", nullable = true)
-	private PlayList play_listcode;
+	private PlayList playListCode;
 
     @ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "song_code", nullable = true)
-	private Song song_code;
+	private Song songCode;
 
 	@Column(name = "date_added")
-	private Date date_added;
+	private Date dateAdded;
 
-	public SongXPlaylist(PlayList play_listcode, Song song_code, Date date_added) {
-		this.play_listcode = play_listcode;
-		this.song_code = song_code;
-		this.date_added = date_added;
+	public SongXPlaylist(PlayList playListCode, Song songCode, Date dateAdded) {
+		this.playListCode = playListCode;
+		this.songCode = songCode;
+		this.dateAdded = dateAdded;
 	}
 }
