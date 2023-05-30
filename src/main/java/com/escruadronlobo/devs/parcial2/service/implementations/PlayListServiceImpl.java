@@ -10,6 +10,7 @@ import com.escruadronlobo.devs.parcial2.models.dtos.PlayListDTO;
 import com.escruadronlobo.devs.parcial2.models.entities.PlayList;
 import com.escruadronlobo.devs.parcial2.models.entities.User;
 import com.escruadronlobo.devs.parcial2.repositories.PlayListRepository;
+import com.escruadronlobo.devs.parcial2.repositories.UserRepository;
 import com.escruadronlobo.devs.parcial2.service.PlayListService;
 
 import jakarta.transaction.Transactional;
@@ -19,11 +20,12 @@ public class PlayListServiceImpl implements PlayListService{
 	
 	@Autowired
 	private PlayListRepository playListRepository;
+	
 
 	@Override
 	@Transactional(rollbackOn = Exception.class)
-	public void save(PlayListDTO info, User user) throws Exception {
-		PlayList newPlayList = new PlayList(info.getTitle(), info.getDescription(), user);
+	public void save(PlayListDTO info, User usercode) throws Exception {
+		PlayList newPlayList = new PlayList(info.getTitle(), info.getDescription(), usercode);
 			playListRepository.save(newPlayList);
 		
 	}
@@ -50,6 +52,34 @@ public class PlayListServiceImpl implements PlayListService{
 		}catch (Exception e) {
 			return null;
 		}
+	}
+
+	@Override
+	public void update(String code, PlayListDTO info) throws Exception {
+		
+		UUID playlistId;
+		
+	    try {
+	        playlistId = UUID.fromString(code);
+	    } catch (IllegalArgumentException e) {
+	        throw new Exception("Invalid playlist code");
+	    }
+
+	    PlayList existingPlaylist = playListRepository.findById(playlistId).orElse(null);
+	    if (existingPlaylist == null) {
+	        throw new Exception("Playlist not found");
+	    }
+	    
+	    existingPlaylist.setTitle(info.getTitle());
+	    existingPlaylist.setDescription(info.getDescription());
+	    
+	    playListRepository.save(existingPlaylist);
+		
+	}
+
+	@Override
+	public List<PlayList> findOneByTitle(String title) {
+	    return playListRepository.findByTitleContainingIgnoreCase(title);
 	}
 	
 

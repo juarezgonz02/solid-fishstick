@@ -4,12 +4,13 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class PlayListDTO {
+public class UserDTO {
+	@NotEmpty
+	private String username;
 	
 	@NotEmpty
-	private String title;
+	private String email;
 	
 	@NotEmpty
-	private String description;
-	
+	private String password;
 }

@@ -8,7 +8,9 @@ import com.escruadronlobo.devs.parcial2.models.entities.User;
 
 public interface PlayListService {
 	void save(PlayListDTO info, User usercode) throws Exception;
+	void update(String code, PlayListDTO info)throws Exception;
 	void deleteOneById(String code) throws Exception;
 	List<PlayList> findAll();
 	PlayList findOneById(String code);
+	List<PlayList> findOneByTitle(String title);
 }
